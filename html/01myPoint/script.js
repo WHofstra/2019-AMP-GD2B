@@ -19,7 +19,7 @@ function animate(){
     requestAnimationFrame(animate);
 
     let A = new Point(new Vector2d(getRandom(width), getRandom(height)),
-     getRandomMin(10, 50), getRandomColor(), getRandomColor());
+     getRandomMin(10, 30), getRandomColor(), getRandomColor());
     //A.draw(context);
     dots.push(A);
     frames++;
@@ -27,7 +27,7 @@ function animate(){
     for(let i = 0; i<dots.length;i++){
     dots[i].radius += 1;
     dots[i].draw(context)
-    if(dots[i].radius > 50){
+    if(dots[i].radius > 30){
       dots.splice(i,1);
     }
   }
