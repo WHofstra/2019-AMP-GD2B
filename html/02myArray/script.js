@@ -18,8 +18,8 @@ point.draw(context);
 
 window.addEventListener('click', (evt)=>{
   //console.console.log(evt.clientX, evt.clientY);
-  mouseVector.dx = evt.clienX;
-  mouseVector.dy = evt.clienY;
+  mouseVector.dx = evt.clientX;
+  mouseVector.dy = evt.clientY;
   console.log(mouseVector);
   console.log(point.position);
   difference.differenceVector(point.position, mouseVector);
@@ -27,8 +27,8 @@ window.addEventListener('click', (evt)=>{
   console.log(difference.magnitude);
 
   if(difference.magnitude <= point.radius){
-    point.position.dx += (Math.random() * (width - point.dx));
-    point.position.dy += (Math.random() * (height - point.dy));
+    point.color1 = "rgb(80, 0, 255)";
+    point.color2 = "rgb(150, 200, 255)";
     point.draw(context);
   }
 })
