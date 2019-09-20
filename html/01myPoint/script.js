@@ -19,7 +19,7 @@ function animate(){
     requestAnimationFrame(animate);
 
     let A = new Point(new Vector2d(getRandom(width), getRandom(height)),
-     getRandomMin(10, 30), getRandomColor(), getRandomColor());
+     getRandomMin(10, 30), getRandomColor(), getRandomColor(), frames);
     //A.draw(context);
     dots.push(A);
     frames++;
