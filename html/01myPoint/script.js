@@ -8,12 +8,12 @@ canvas.width = width;
 canvas.height = height;
 
 let dots = [];
-var frames = 0;
+var frames = 1;
 
 function animate(){
-    if (frames >= 300){
+    if (frames > 300){
       context.clearRect(0, 0, width, height);
-      frames = 0;
+      frames = 1;
     }
 
     requestAnimationFrame(animate);

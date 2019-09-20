@@ -7,8 +7,12 @@ const height = window.innerHeight;
 canvas.width = width;
 canvas.height = height;
 
-let point = new Point(new Vector2d(200, 300), 100);
+var frames = 1;
+
+let point = new Point(new Vector2d(getRandom(width), getRandom(height)),
+ 30, getRandomColor(), getRandomColor(), frames);
 let mouseVector = new Vector2d(0, 0);
+let difference = new Vector2d(0, 0);
 
 point.draw(context);
 
@@ -29,10 +33,21 @@ window.addEventListener('click', (evt)=>{
   }
 })
 
-//let a = new Vector2d(1, 2);
-//let b = new Vector2d(3, 4);
+function getRandom(max){
+  return Math.floor(Math.random()*max);
+}
 
-//let c = new Vector2d(0, 0);
-//c.differenceVector(a, b);
+function getRandomMin(min, max){
+  return Math.floor(Math.random()*(max - min) + min);
+}
 
-//console.log(c);
+function getRandomColor()
+{
+    var color = "";
+    for(var i = 0; i < 3; i++) {
+        //Choose a random number and convert it to hexadecimal
+        var sub = Math.floor(Math.random() * 256).toString(16);
+        color += (sub.length == 1 ? "0" + sub : sub);
+    }
+    return "#" + color;
+}
