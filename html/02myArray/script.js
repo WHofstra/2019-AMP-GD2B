@@ -41,7 +41,7 @@ function refresh(){
 refresh();
 
 window.addEventListener('click', (evt)=>{
-  //console.console.log(evt.clientX, evt.clientY);
+  //console.log(evt.clientX, evt.clientY);
 
   for (let i = 0; i < dots.length; i++){
     mouseVector.dx = evt.clientX;
