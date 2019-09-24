@@ -4,9 +4,13 @@ const context = canvas.getContext('2d');
 const width = window.innerWidth;
 const height = window.innerHeight;
 
+const max_dots = 10;
+
 canvas.width = width;
 canvas.height = height;
 
+let dots = [];
+var clicked = [];
 var frames = 1;
 
 let point = new Point(new Vector2d(getRandom(width), getRandom(height)),
@@ -14,24 +18,62 @@ let point = new Point(new Vector2d(getRandom(width), getRandom(height)),
 let mouseVector = new Vector2d(0, 0);
 let difference = new Vector2d(0, 0);
 
-point.draw(context);
+function refresh(){
+  context.clearRect(0, 0, width, height);
+
+  for (let i = 0; i < max_dots; i++){
+    clicked[i] = 0;
+  }
+
+  while (frames <= max_dots){
+    let point = new Point(new Vector2d(getRandom(width), getRandom(height)),
+     30, getRandomColor(), getRandomColor(), frames);
+    //point.draw(context);
+    dots.push(point);
+    frames++;
+  }
+
+  for (let i = 0; i < dots.length; i++){
+    dots[i].draw(context);
+  }
+}
+
+refresh();
 
 window.addEventListener('click', (evt)=>{
   //console.console.log(evt.clientX, evt.clientY);
-  mouseVector.dx = evt.clientX;
-  mouseVector.dy = evt.clientY;
-  console.log(mouseVector);
-  console.log(point.position);
-  difference.differenceVector(point.position, mouseVector);
-  console.log(difference);
-  console.log(difference.magnitude);
 
-  if(difference.magnitude <= point.radius){
-    point.color1 = "rgb(80, 0, 255)";
-    point.color2 = "rgb(150, 200, 255)";
-    point.draw(context);
+  for (let i = 0; i < dots.length; i++){
+    mouseVector.dx = evt.clientX;
+    mouseVector.dy = evt.clientY;
+    //console.log(mouseVector);
+    //console.log(dots[i].position);
+    difference.differenceVector(dots[i].position, mouseVector);
+    //console.log(difference);
+    //console.log(difference.magnitude);
+
+    if(difference.magnitude <= dots[i].radius){
+      dots[i].color1 = "rgb(0, 80, 255)";
+      dots[i].color2 = "rgb(150, 200, 255)";
+      //point.draw(context);
+      dots[i].draw(context);
+      clicked[i] = 1;
+      newSet();
+    }
   }
 })
+
+function newSet(){
+
+  for (let i = 0; i < dots.length && clicked[i] == 1; i++){
+    console.log("Ball " + i + " clicked!");
+
+    if (i == dots.length - 1){
+      frames = 1;
+      refresh();
+    }
+  }
+}
 
 function getRandom(max){
   return Math.floor(Math.random()*max);

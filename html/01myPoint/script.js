@@ -26,7 +26,7 @@ function animate(){
 
     for(let i = 0; i<dots.length;i++){
     dots[i].radius += 1;
-    dots[i].draw(context)
+    dots[i].draw(context);
     if(dots[i].radius > 30){
       dots.splice(i,1);
     }
