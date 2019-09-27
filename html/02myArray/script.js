@@ -13,8 +13,8 @@ let dots = [];
 var clicked = [];
 var frames = 1;
 
-let point = new Point(new Vector2d(getRandom(width), getRandom(height)),
- 30, getRandomColor(), getRandomColor(), frames);
+//let point = new Point(new Vector2d(getRandom(width), getRandom(height)),
+// 30, getRandomColor(), getRandomColor(), frames);
 let mouseVector = new Vector2d(0, 0);
 let difference = new Vector2d(0, 0);
 
@@ -22,9 +22,10 @@ for (let i = 0; i < max_dots; i++){
     clicked[i] = 0;
 }
 
-function refresh(){
+function animate(){
   context.clearRect(0, 0, width, height);
-  requestAnimationFrame(refresh);
+
+  requestAnimationFrame(animate);
 
   while (frames <= max_dots){
     let point = new Point(new Vector2d(getRandom(width), getRandom(height)),
@@ -36,10 +37,14 @@ function refresh(){
 
   for (let i = 0; i < dots.length; i++){
     dots[i].draw(context);
+
+
   }
+
+
 }
 
-refresh();
+animate();
 
 window.addEventListener('click', (evt)=>{
   //console.log(evt.clientX, evt.clientY);
@@ -54,30 +59,45 @@ window.addEventListener('click', (evt)=>{
     //console.log(difference.magnitude);
 
     if(difference.magnitude <= dots[i].radius){
-      dots[i].color1 = "rgb(0, 80, 255)";
-      dots[i].color2 = "rgb(150, 200, 255)";
-      //point.draw(context);
-      dots[i].draw(context);
       newClicked(i);
     }
+    //console.log(checkAllBalls());
   }
 })
 
 function newClicked(i){
+  dots[i].color1 = "rgb(0, 80, 255)";
+  dots[i].color2 = "rgb(150, 200, 255)";
+  //point.draw(context);
+  dots[i].draw(context);
+
     clicked[i] = 1;
     console.log("Ball " + (i + 1) + " clicked!");
     console.log(clicked);
-    console.log(checkAllBalls());
+    //console.log(checkAllBalls());
+
+    if (checkAllBalls()){
+      console.log("Verschijn!");
+      frames = 1;
+      for (let i = 0; i < dots.length; i++){
+          clicked[i] = 0;
+        }
+    }
 }
 
 function checkAllBalls(){
     for (let i = 0; i < dots.length; i ++){
       if (clicked[i] == 0){
-        return "Nein!";
+        return false;
       }
     }
 
-    return "Allrighty then."
+    //if (this == true){  //Ik probeerde het met dit...
+    //  return false;
+    //}
+
+    dots.splice(0, dots.length);
+    return true;
 }
 
 function getRandom(max){
