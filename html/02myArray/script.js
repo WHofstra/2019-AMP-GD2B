@@ -18,12 +18,13 @@ let point = new Point(new Vector2d(getRandom(width), getRandom(height)),
 let mouseVector = new Vector2d(0, 0);
 let difference = new Vector2d(0, 0);
 
+for (let i = 0; i < max_dots; i++){
+    clicked[i] = 0;
+}
+
 function refresh(){
   context.clearRect(0, 0, width, height);
-
-  for (let i = 0; i < max_dots; i++){
-    clicked[i] = 0;
-  }
+  requestAnimationFrame(refresh);
 
   while (frames <= max_dots){
     let point = new Point(new Vector2d(getRandom(width), getRandom(height)),
@@ -57,22 +58,26 @@ window.addEventListener('click', (evt)=>{
       dots[i].color2 = "rgb(150, 200, 255)";
       //point.draw(context);
       dots[i].draw(context);
-      clicked[i] = 1;
-      newSet();
+      newClicked(i);
     }
   }
 })
 
-function newSet(){
+function newClicked(i){
+    clicked[i] = 1;
+    console.log("Ball " + (i + 1) + " clicked!");
+    console.log(clicked);
+    console.log(checkAllBalls());
+}
 
-  for (let i = 0; i < dots.length && clicked[i] == 1; i++){
-    console.log("Ball " + i + " clicked!");
-
-    if (i == dots.length - 1){
-      frames = 1;
-      refresh();
+function checkAllBalls(){
+    for (let i = 0; i < dots.length; i ++){
+      if (clicked[i] == 0){
+        return "Nein!";
+      }
     }
-  }
+
+    return "Allrighty then."
 }
 
 function getRandom(max){
